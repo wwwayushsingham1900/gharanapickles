@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 const _inter = Inter({
@@ -40,6 +41,7 @@ export default function RootLayout({
     <html lang="en" className={`${_inter.variable} ${_playfair.variable} scroll-smooth`}>
       <body className="font-sans antialiased bg-base text-brown-dark bg-mud-pattern relative overflow-x-hidden">
         {children}
+        <Analytics />
       </body>
     </html>
   )
