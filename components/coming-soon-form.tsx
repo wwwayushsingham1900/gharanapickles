@@ -71,26 +71,26 @@ export function ComingSoonForm() {
   if (submitted) {
     return (
       <div
-        className={`bg-card/80 backdrop-blur-md p-8 md:p-12 rounded-[2rem] md:rounded-3xl border border-mustard/20 shadow-xl text-center space-y-5 md:space-y-6 transition-opacity duration-300 ${fading ? "opacity-0" : "opacity-100 animate-fade-in-up"}`}
+        className={`w-full max-w-md bg-white/95 backdrop-blur-xl p-8 md:p-10 rounded-3xl shadow-2xl border border-white/20 text-center space-y-5 md:space-y-6 transition-opacity duration-300 fade-in-up ${fading ? "opacity-0" : "opacity-100"}`}
       >
-        <div className="w-14 h-14 md:w-16 md:h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto text-green-600 mb-2 md:mb-4">
-          <CheckCircle className="w-6 h-6 md:w-7 md:h-7" />
+        <div className="w-16 h-16 md:w-20 md:h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto text-green-600 mb-2">
+          <CheckCircle className="w-8 h-8 md:w-10 md:h-10" />
         </div>
-        <h3 className="text-xl md:text-2xl font-serif font-medium text-brown-dark tracking-tight">
+        <h3 className="text-2xl md:text-3xl font-serif font-medium text-gray-900 tracking-tight">
           With Love & Gratitude
         </h3>
-        <p className="text-[0.95rem] md:text-sm font-semibold text-chilli tracking-wide uppercase">
-          YOUR PLACE IN OUR KITCHEN IS RESERVED
+        <p className="text-sm font-semibold text-amber-700 tracking-wide uppercase">
+          Your place in our kitchen is reserved
         </p>
-        <p className="text-[0.95rem] md:text-sm text-brown-light leading-relaxed max-w-sm mx-auto">
-          Thank you for believing in us. Your name has been written on our kitchen wall,the sacred place where every order begins.
+        <p className="text-sm text-gray-600 leading-relaxed">
+          Thank you for believing in us. Your name has been written on our kitchen wall — the sacred place where every order begins.
         </p>
-        <p className="text-[0.95rem] md:text-sm text-brown-light leading-relaxed max-w-sm mx-auto">
+        <p className="text-sm text-gray-600 leading-relaxed">
           We're perfecting each batch with the same care Maa put into hers. Soon, a jar of warmth, tradition, and homemade love will find its way to your table.
         </p>
         <button
           onClick={resetForm}
-          className="mt-4 text-[11px] md:text-xs font-medium text-terracotta-dark hover:text-chilli transition-colors border-b border-transparent hover:border-chilli pb-0.5"
+          className="mt-4 text-xs font-medium text-mustard-dark hover:text-mustard-deep transition-colors border-b border-transparent hover:border-mustard-dark pb-1"
         >
           Return to Form
         </button>
@@ -100,17 +100,17 @@ export function ComingSoonForm() {
 
   return (
     <div
-      className={`bg-card/80 backdrop-blur-md p-6 sm:p-8 md:p-10 rounded-[2rem] md:rounded-3xl border border-mustard/20 shadow-[0_20px_40px_rgba(69,26,3,0.05)] md:shadow-[0_30px_60px_rgba(69,26,3,0.05)] transition-opacity duration-300 ${fading ? "opacity-0" : "opacity-100"}`}
+      className={`w-full max-w-md bg-white/95 backdrop-blur-xl p-6 sm:p-8 md:p-10 rounded-3xl shadow-2xl border border-white/20 transition-opacity duration-300 fade-in-up delay-200 ${fading ? "opacity-0" : "opacity-100"}`}
     >
       <form onSubmit={handleSubmit} className="space-y-5 md:space-y-6">
         {/* Full Name */}
         <div>
-          <label className="block text-[11px] md:text-xs font-medium text-brown-dark mb-1.5 md:mb-2 ml-1">
+          <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-2 ml-1">
             Full Name
           </label>
           <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-brown-light/50">
-              <User className="w-4 h-4 md:w-[18px] md:h-[18px]" />
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+              <User className="w-4 h-4 md:w-5 md:h-5" />
             </div>
             <input
               type="text"
@@ -118,21 +118,21 @@ export function ComingSoonForm() {
               value={formData.fullName}
               onChange={handleInputChange}
               required
-              className="w-full bg-base/50 border border-mustard/20 text-brown-dark text-[0.95rem] md:text-sm rounded-2xl pl-11 pr-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-terracotta/30 focus:border-terracotta/50 transition-all placeholder:text-brown-light/40"
-              placeholder="Aarav Sharma"
+              className="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-mustard-dark/30 focus:border-mustard-dark transition-all placeholder:text-gray-400"
+              placeholder="Your Full Name"
             />
           </div>
         </div>
 
         {/* Email & Phone */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
           <div>
-            <label className="block text-[11px] md:text-xs font-medium text-brown-dark mb-1.5 md:mb-2 ml-1">
+            <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-2 ml-1">
               Email Address
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-brown-light/50">
-                <Mail className="w-4 h-4 md:w-[18px] md:h-[18px]" />
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                <Mail className="w-4 h-4 md:w-5 md:h-5" />
               </div>
               <input
                 type="email"
@@ -140,25 +140,25 @@ export function ComingSoonForm() {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className="w-full bg-base/50 border border-mustard/20 text-brown-dark text-[0.95rem] md:text-sm rounded-2xl pl-11 pr-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-terracotta/30 focus:border-terracotta/50 transition-all placeholder:text-brown-light/40"
-                placeholder="hello@example.com"
+                className="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-mustard-dark/30 focus:border-mustard-dark transition-all placeholder:text-gray-400"
+                placeholder="your@email.com"
               />
             </div>
           </div>
           <div>
-            <label className="block text-[11px] md:text-xs font-medium text-brown-dark mb-1.5 md:mb-2 ml-1">
+            <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-2 ml-1">
               Phone Number
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-brown-light/50">
-                <Phone className="w-4 h-4 md:w-[18px] md:h-[18px]" />
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                <Phone className="w-4 h-4 md:w-5 md:h-5" />
               </div>
               <input
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                className="w-full bg-base/50 border border-mustard/20 text-brown-dark text-[0.95rem] md:text-sm rounded-2xl pl-11 pr-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-terracotta/30 focus:border-terracotta/50 transition-all placeholder:text-brown-light/40"
+                className="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-mustard-dark/30 focus:border-mustard-dark transition-all placeholder:text-gray-400"
                 placeholder="+91 98765 43210"
               />
             </div>
@@ -167,12 +167,12 @@ export function ComingSoonForm() {
 
         {/* Delivery City */}
         <div>
-          <label className="block text-[11px] md:text-xs font-medium text-brown-dark mb-1.5 md:mb-2 ml-1">
-            Delivery City / Area
+          <label className="block text-xs md:text-sm font-semibold text-gray-700 mb-2 ml-1">
+            City / Delivery Area
           </label>
           <div className="relative">
-            <div className="absolute top-[14px] md:top-4 left-0 pl-4 flex items-start pointer-events-none text-brown-light/50">
-              <MapPin className="w-4 h-4 md:w-[18px] md:h-[18px]" />
+            <div className="absolute top-3 left-0 pl-4 flex items-start pointer-events-none text-gray-400">
+              <MapPin className="w-4 h-4 md:w-5 md:h-5" />
             </div>
             <textarea
               rows={2}
@@ -180,8 +180,8 @@ export function ComingSoonForm() {
               value={formData.city}
               onChange={handleInputChange}
               required
-              className="w-full bg-base/50 border border-mustard/20 text-brown-dark text-[0.95rem] md:text-sm rounded-2xl pl-11 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-terracotta/30 focus:border-terracotta/50 transition-all placeholder:text-brown-light/40 resize-none"
-              placeholder="Where should we send the love?"
+              className="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-mustard-dark/30 focus:border-mustard-dark transition-all placeholder:text-gray-400 resize-none"
+              placeholder="Your city or area"
             />
           </div>
         </div>
@@ -189,9 +189,9 @@ export function ComingSoonForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-mustard-dark text-primary-foreground py-3.5 md:py-4 rounded-2xl text-[0.95rem] md:text-sm font-medium tracking-wide hover:bg-mustard-deep hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 mt-2 disabled:opacity-70 disabled:cursor-not-allowed"
+          className="w-full bg-mustard-dark hover:bg-mustard-deep text-white py-3 rounded-xl text-sm font-semibold tracking-wide transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0 mt-2"
         >
-          {loading ? "Submitting..." : "Notify Me When It's Ready"}
+          {loading ? "Signing You Up..." : "Notify Me When Ready"}
         </button>
       </form>
     </div>

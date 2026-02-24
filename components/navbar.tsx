@@ -44,7 +44,7 @@ export function Navbar() {
                 : "border-transparent hover:border-chilli"
             )}
           >
-            Coming Soon
+            Order Now
           </Link>
         </div>
       </div>

@@ -1,32 +1,49 @@
 import { Navbar } from "@/components/navbar"
-import { ComingSoonForm } from "@/components/coming-soon-form"
+import { ProductCard } from "@/components/product-card"
+import { Footer } from "@/components/footer"
+import { Particles } from "@/components/particles"
+import { Sun } from "lucide-react"
 
 export default function ComingSoonPage() {
   return (
     <>
       <Navbar />
-      <div className="min-h-dvh flex items-center justify-center relative bg-cream/50 pt-16 md:pt-20">
-        {/* Background elements */}
-        <div className="absolute inset-0 bg-sunlight opacity-70 pointer-events-none" />
-        <div className="absolute top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-terracotta/5 rounded-full blur-[80px] md:blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-mustard/5 rounded-full blur-[80px] md:blur-[100px] pointer-events-none" />
+      <main className="pt-16 md:pt-20 relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-sunlight">
+        {/* Ambient Lighting & Particles */}
+        <div className="absolute inset-0 bg-sunlight-left pointer-events-none" />
+        <Particles />
 
-        <div className="max-w-xl w-full mx-auto px-4 md:px-6 relative z-10 py-12 md:py-20">
-          <div className="text-center space-y-3 md:space-y-4 mb-8 md:mb-12 px-2">
-            <span className="text-[10px] md:text-xs font-medium uppercase tracking-widest text-terracotta-dark">
-              A Labor of Love
-            </span>
-            <h1 className="text-4xl md:text-5xl font-serif font-medium tracking-tight text-brown-dark text-balance">
-              Coming Soon
+        <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 w-full grid xl:grid-cols-2 gap-12 xl:gap-16 items-center py-16 md:py-20">
+          {/* Hero Section */}
+          <div className="space-y-6 md:space-y-8 animate-fade-in-up text-center xl:text-left">
+            <div className="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-mustard-light/30 border border-mustard-dark/20 text-mustard-deep text-[10px] md:text-xs font-medium tracking-wide uppercase">
+              <Sun className="w-3.5 h-3.5 md:w-4 md:h-4" />
+              Sun-dried in small batches
+            </div>
+
+            <h1 className="text-[2.5rem] leading-[1.1] md:text-5xl lg:text-6xl font-serif font-medium tracking-tight text-brown-dark text-balance">
+              {"Gharana Pickles:"}
+              <br className="hidden md:block" />
+              <span className="text-chilli-dark italic font-normal">
+                The Taste of Home,
+              </span>
+              <br />
+              {"Coming Soon."}
             </h1>
-            <p className="text-[0.95rem] md:text-base text-brown-light font-light">
-              {"We are taking our time to perfect the recipe. Sign up to be the first to know when we bring the taste of Maa's kitchen to your home."}
+
+            <p className="text-base md:text-xl text-brown-light font-light leading-relaxed max-w-md mx-auto xl:mx-0">
+              Experience the richness of traditional recipes, handcrafted in small
+              batches using pure, premium ingredients.
             </p>
           </div>
 
-          <ComingSoonForm />
+          {/* Product Card */}
+          <div className="w-full flex justify-center xl:justify-end">
+            <ProductCard />
+          </div>
         </div>
-      </div>
+      </main>
+      <Footer />
     </>
   )
 }

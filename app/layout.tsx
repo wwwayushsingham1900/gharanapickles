@@ -39,6 +39,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${_inter.variable} ${_playfair.variable} scroll-smooth`}>
+      <head>
+        {/* Google Analytics */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-NWQGMMCPJ9"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-NWQGMMCPJ9');
+            `,
+          }}
+        />
+      </head>
       <body className="font-sans antialiased bg-base text-brown-dark bg-mud-pattern relative overflow-x-hidden">
         {children}
         <Analytics />
