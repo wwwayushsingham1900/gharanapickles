@@ -55,7 +55,7 @@ export function HeroSection() {
           <div className="relative w-full max-w-[260px] sm:max-w-xs md:max-w-md aspect-[4/5] rounded-t-full rounded-b-[3rem] md:rounded-b-[4rem] overflow-hidden border-4 md:border-8 border-card/60 shadow-[0_20px_40px_rgba(69,26,3,0.15)] md:shadow-[0_20px_50px_rgba(69,26,3,0.1)]">
             <div className="bg-gradient-to-t from-brown-dark/40 via-transparent to-transparent mix-blend-multiply absolute inset-0 z-10" />
             <Image
-              src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/208142e6-e92a-4696-9641-71802481f841_1600w.png"
+              src="https://res.cloudinary.com/dlj1oohhg/image/upload/v1772030882/aura_imag_ahnigv.png"
               alt="Traditional Indian Pickles in Jar"
               fill
               className="object-cover object-center transform hover:scale-105 transition-transform duration-1000 -translate-y-3"
