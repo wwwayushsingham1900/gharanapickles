@@ -5,25 +5,25 @@ const ingredients = [
     name: "Sun-dried Chillies",
     subtitle: "Hand-picked & crisp",
     image:
-      "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/c3834f14-5551-4aec-96fa-cfb6df3d6c5b_320w.png",
+      "https://res.cloudinary.com/dlj1oohhg/image/upload/v1772035592/Ingredient_chilli_tc2bo8.png",
   },
   {
     name: "Mustard Oil",
     subtitle: "Pure kachi ghani",
     image:
-      "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/061d45d5-3aba-4d5a-8f12-fdae95d9aed3_320w.png",
+      "https://res.cloudinary.com/dlj1oohhg/image/upload/v1772035592/Ingredient_oil_xiqiaw.png",
   },
   {
     name: "Desi Spices",
     subtitle: "Fennel & coriander",
     image:
-      "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/9a5cd3de-827e-4e90-b30d-b3d3923e4161_320w.png",
+      "https://res.cloudinary.com/dlj1oohhg/image/upload/v1772035592/ingredient_masala_cymouf.png",
   },
   {
     name: "Mother's Touch",
     subtitle: "No preservatives",
     image:
-      "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/f4110a85-7f87-4c1d-9dfa-41dec1c878dd_320w.png",
+      "https://res.cloudinary.com/dlj1oohhg/image/upload/v1772035592/moooom_kvrl7v.png",
   },
 ]
 
