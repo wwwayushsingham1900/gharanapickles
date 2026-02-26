@@ -6,9 +6,9 @@ import { useCallback } from "react"
 export type Size = "250g" | "500g" | "1kg"
 
 const PRICING: Record<Size, number> = {
-  "250g": 215,
-  "500g": 410,
-  "1kg": 800,
+  "250g": 274,
+  "500g": 476,
+  "1kg": 650,
 }
 
 const SIZES: { label: Size; index: number }[] = [
