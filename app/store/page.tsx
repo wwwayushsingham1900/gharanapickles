@@ -4,7 +4,7 @@ import { Footer } from "@/components/footer"
 import { Particles } from "@/components/particles"
 import { Sun } from "lucide-react"
 
-export default function ComingSoonPage() {
+export default function StorePage() {
   return (
     <>
       <Navbar />
@@ -25,10 +25,10 @@ export default function ComingSoonPage() {
               {"Gharana Pickles:"}
               <br className="hidden md:block" />
               <span className="text-chilli-dark italic font-normal">
-                The Taste of Home,
+                The Taste of Home
               </span>
               <br />
-              {"Coming Soon."}
+              {"Order Now."}
             </h1>
 
             <p className="text-base md:text-xl text-brown-light font-light leading-relaxed max-w-md mx-auto xl:mx-0">

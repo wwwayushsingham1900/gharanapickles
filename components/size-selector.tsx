@@ -97,7 +97,7 @@ export function SizeSelector({
           onClick={handleOrderClick}
           className="w-full bg-chilli-dark text-white py-4 rounded-2xl text-sm font-medium tracking-wide hover:bg-chilli hover:shadow-[0_8px_30px_rgba(153,27,27,0.3)] transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg flex items-center justify-center gap-2 cursor-pointer"
         >
-          Order Now
+          Add to Cart
           <ArrowRight className="h-4 w-4" />
         </button>
       </div>

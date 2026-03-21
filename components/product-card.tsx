@@ -3,24 +3,27 @@
 import { useState, useCallback } from "react"
 import { ImageGallery } from "@/components/image-gallery"
 import { SizeSelector } from "@/components/size-selector"
-import { PreorderModal } from "@/components/preorder-modal"
 import type { Size } from "@/components/size-selector"
+import { PRICING } from "@/components/size-selector"
+import { useCart } from "@/lib/cart-context"
 
 export function ProductCard() {
   const [selectedSize, setSelectedSize] = useState<Size>("1kg")
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { addToCart } = useCart()
 
   const handleSizeChange = useCallback((size: Size) => {
     setSelectedSize(size)
   }, [])
 
-  const handleOpenModal = useCallback(() => {
-    setIsModalOpen(true)
-  }, [])
-
-  const handleCloseModal = useCallback(() => {
-    setIsModalOpen(false)
-  }, [])
+  const handleAddToCart = useCallback(() => {
+    addToCart({
+      id: `bharua-lal-mirch-${selectedSize}`,
+      title: "Bharua Lal Mirchi Achaar",
+      size: selectedSize,
+      price: PRICING[selectedSize],
+      image: "/bharua_lal_mirch_ingredients_3.png"
+    })
+  }, [selectedSize, addToCart])
 
   return (
     <>
@@ -30,17 +33,10 @@ export function ProductCard() {
           <SizeSelector
             selectedSize={selectedSize}
             onSizeChange={handleSizeChange}
-            onOrderClick={handleOpenModal}
+            onOrderClick={handleAddToCart}
           />
         </div>
       </div>
-
-      <PreorderModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        selectedSize={selectedSize}
-        onSizeChange={handleSizeChange}
-      />
     </>
   )
 }

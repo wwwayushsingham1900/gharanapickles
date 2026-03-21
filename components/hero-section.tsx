@@ -33,7 +33,7 @@ export function HeroSection() {
 
           <div className="pt-2 md:pt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-center md:justify-start gap-4 sm:gap-6">
             <Link
-              href="/coming-soon"
+              href="/store"
               className="bg-chilli-dark text-primary-foreground px-6 py-3.5 md:px-8 md:py-4 rounded-full text-sm font-medium tracking-wide hover:bg-chilli hover:shadow-[0_8px_30px_rgba(153,27,27,0.3)] transition-all duration-300 transform hover:-translate-y-0.5 text-center"
             >
               Taste the Love
