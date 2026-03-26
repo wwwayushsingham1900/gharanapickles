@@ -34,11 +34,12 @@ export async function POST(request: NextRequest) {
 
     // Create signed token payload
     const payload = JSON.stringify({ token: sessionToken, expiresAt })
+    const payloadB64 = Buffer.from(payload).toString("base64")
     const signature = crypto
       .createHmac("sha256", process.env.NEXTAUTH_SECRET || "fallback_secret")
-      .update(payload)
+      .update(payloadB64)
       .digest("hex")
-    const signedValue = `${Buffer.from(payload).toString("base64")}.${signature}`
+    const signedValue = `${payloadB64}.${signature}`
 
     const response = NextResponse.json({ success: true })
 
