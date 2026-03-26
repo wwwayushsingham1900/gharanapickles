@@ -1,20 +1,20 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import type { Size } from "@/components/size-selector";
 
 export interface CartItem {
   id: string; // Product variants combination (e.g. bharua-lal-mirch-500g)
   title: string;
-  size: Size;
+  size: string;
   price: number;
   quantity: number;
   image: string;
+  isPreorder?: boolean;
 }
 
 interface CartContextType {
   items: CartItem[];
-  addToCart: (item: Omit<CartItem, "quantity">) => void;
+  addToCart: (item: Omit<CartItem, "quantity"> & { quantity?: number }) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
@@ -46,17 +46,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("cart", JSON.stringify(items));
   }, [items]);
 
-  const addToCart = (newItem: Omit<CartItem, "quantity">) => {
+  const addToCart = (newItem: Omit<CartItem, "quantity"> & { quantity?: number }) => {
+    const qtyToAdd = newItem.quantity || 1;
     setItems((currentItems) => {
       const existingItem = currentItems.find((item) => item.id === newItem.id);
       if (existingItem) {
         return currentItems.map((item) =>
           item.id === newItem.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: item.quantity + qtyToAdd }
             : item
         );
       }
-      return [...currentItems, { ...newItem, quantity: 1 }];
+      return [...currentItems, { ...newItem, quantity: qtyToAdd }];
     });
     setIsCartOpen(true); // Open cart automatically when adding
   };

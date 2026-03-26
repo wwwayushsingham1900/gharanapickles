@@ -94,7 +94,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
               Thank you for your purchase
             </p>
             <p className="text-sm font-light text-brown-light leading-relaxed px-4">
-              Your order has been recorded securely. We will contact you soon with tracking details. The flavor of home is on its way.
+              Your pre-order has been reserved securely! We're hand-crafting the next limited batch with authentic home-ground spices, and we'll contact you with shipping details once it's ready to dispatch. The flavor of home is on its way.
             </p>
             <button
               onClick={handleClose}

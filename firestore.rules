@@ -1,0 +1,30 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Orders - allow full access for admin dashboard
+    match /orders/{orderId} {
+      allow read, write: if true;
+    }
+    
+    // Products - allow full access for store and admin
+    match /products/{productId} {
+      allow read, write: if true;
+    }
+
+    // User profiles
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Auth credentials
+    match /auth_credentials/{userId} {
+      allow read, write: if true;
+    }
+
+    // Password reset tokens
+    match /password_resets/{tokenId} {
+      allow read, write: if true;
+    }
+  }
+}

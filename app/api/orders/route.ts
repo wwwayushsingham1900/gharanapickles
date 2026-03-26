@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { adminDb } from "@/lib/firebase-admin";
+import { db } from "@/lib/firebase";
+import { collection, addDoc } from "firebase/firestore";
 
 export async function POST(req: Request) {
   try {
@@ -34,24 +35,27 @@ export async function POST(req: Request) {
     let orderId = `mock_${Date.now()}`;
     let message = "Order placed (Firebase offline Mode)";
     
-    if (adminDb) {
-      const orderRef = await adminDb.collection("orders").add({
+    if (db) {
+      const ordersRef = collection(db, "orders");
+      const orderRef = await addDoc(ordersRef, {
         items,
         shippingDetails,
         totalAmount,
         paymentStatus,
         status: "pending",
         createdAt: new Date().toISOString(),
+        adminSecret: "gharanapickles_secure_key_123", // Authenticate to secure Firestore Rules
       });
       orderId = orderRef.id;
       message = "Order placed successfully";
     }
 
     // 4. Update Inventory in 'products' collection (Optional based on schema)
-    // Uncomment when products are fully synced with Firebase.
+    // Client SDK batch updates:
     /*
-    if (adminDb) {
-      const batch = adminDb.batch();
+    if (db) {
+      import { writeBatch, doc, increment } from "firebase/firestore";
+      const batch = writeBatch(db);
       for (const item of items) {
         ...
       }

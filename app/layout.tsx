@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Inter, Playfair_Display, Noto_Serif } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { CartProvider } from '@/lib/cart-context'
+import { AuthProvider } from '@/components/auth-provider'
 import './globals.css'
 
 const _inter = Inter({
@@ -12,6 +13,11 @@ const _inter = Inter({
 const _playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
+})
+
+const _noto = Noto_Serif({
+  subsets: ['latin'],
+  variable: '--font-noto',
 })
 
 export const metadata: Metadata = {
@@ -39,8 +45,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${_inter.variable} ${_playfair.variable} scroll-smooth`}>
+    <html lang="en" className={`${_inter.variable} ${_playfair.variable} ${_noto.variable} scroll-smooth`}>
       <head>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
         {/* Google Analytics */}
         <script
           async
@@ -59,7 +66,9 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased bg-base text-brown-dark bg-mud-pattern relative overflow-x-hidden">
         <CartProvider>
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </CartProvider>
         <Analytics />
       </body>
