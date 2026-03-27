@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   // We handle admin authentication in app/admin/layout.tsx and app/api/admin/verify
   // No need for Basic Auth middleware here as it conflicts with the custom login page.
   return NextResponse.next();
