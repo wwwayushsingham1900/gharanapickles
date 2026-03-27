@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, CheckCircle, CreditCard, ChevronLeft } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
 
@@ -13,6 +13,18 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   const { items, cartTotal, clearCart } = useCart();
   const [step, setStep] = useState<"form" | "processing" | "success">("form");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [orderId, setOrderId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,7 +41,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     };
 
     try {
-      const response = await fetch("/api/orders", {
+      const response = await fetch("/api/razorpay/create-order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,16 +53,64 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
       });
 
       if (!response.ok) {
-        throw new Error("Checkout failed. Please try again.");
+        throw new Error("Failed to initialize checkout. Please try again.");
       }
 
-      const result = await response.json();
-      if (result.success) {
-        clearCart();
-        setStep("success");
-      } else {
-        throw new Error(result.error || "Unknown error during checkout.");
+      const orderData = await response.json();
+      if (!orderData.success) {
+        throw new Error(orderData.error || "Unknown error creating order.");
       }
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "",
+        amount: orderData.order.amount,
+        currency: orderData.order.currency,
+        name: "Gharana Pickles",
+        description: "Payment for your handmade order",
+        order_id: orderData.order.id,
+        handler: async function (paymentResponse: any) {
+          try {
+            setStep("processing");
+            const verifyRes = await fetch("/api/razorpay/verify", {
+               method: "POST",
+               headers: { "Content-Type" : "application/json" },
+               body: JSON.stringify({
+                  razorpay_order_id: paymentResponse.razorpay_order_id,
+                  razorpay_payment_id: paymentResponse.razorpay_payment_id,
+                  razorpay_signature: paymentResponse.razorpay_signature,
+                  orderDocId: orderData.orderDocId
+               })
+            });
+            const verifyData = await verifyRes.json();
+            if (verifyData.success) {
+               clearCart();
+               setOrderId(orderData.internalOrderId);
+               setStep("success");
+            } else {
+               throw new Error("Payment verification failed. If money was deducted, it will be refunded.");
+            }
+          } catch(err: any) {
+            setErrorMsg(err.message);
+            setStep("form");
+          }
+        },
+        prefill: {
+          name: shippingDetails.name,
+          email: shippingDetails.email,
+          contact: shippingDetails.phone,
+        },
+        theme: {
+          color: "#b45309",
+        },
+      };
+
+      const paymentObject = new (window as any).Razorpay(options);
+      paymentObject.on("payment.failed", function (response: any) {
+         setErrorMsg("Payment Failed: " + response.error.description);
+         setStep("form");
+      });
+      paymentObject.open();
+
     } catch (error: any) {
       setErrorMsg(error.message);
       setStep("form");
@@ -62,6 +122,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     setTimeout(() => {
       setStep("form");
       setErrorMsg(null);
+      setOrderId(null);
     }, 300);
   };
 
@@ -93,6 +154,11 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
             <p className="text-sm font-semibold text-mustard-dark tracking-wide uppercase">
               Thank you for your purchase
             </p>
+            {orderId && (
+              <p className="text-lg font-bold text-charcoal-deep font-mono mt-2 mb-4 bg-earth/10 py-2 rounded-xl border border-earth/20 inline-block px-4">
+                {orderId}
+              </p>
+            )}
             <p className="text-sm font-light text-brown-light leading-relaxed px-4">
               Your pre-order has been reserved securely! We're hand-crafting the next limited batch with authentic home-ground spices, and we'll contact you with shipping details once it's ready to dispatch. The flavor of home is on its way.
             </p>

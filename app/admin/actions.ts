@@ -26,6 +26,22 @@ export async function getAdminProducts(): Promise<Product[]> {
   }
 }
 
+export async function getProductById(id: string): Promise<Product | null> {
+  try {
+    const docRef = doc(db, "products", id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists() && !docSnap.data().isDeleted) {
+      const data = docSnap.data();
+      delete data.adminSecret;
+      return { id: docSnap.id, ...data } as Product;
+    }
+    return null;
+  } catch (error) {
+    console.error("Failed to fetch product by ID", error);
+    return null;
+  }
+}
+
 export async function updateAdminProduct(product: Product): Promise<void> {
   const { id, ...data } = product;
   const docRef = doc(db, "products", id);

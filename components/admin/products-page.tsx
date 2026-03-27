@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Package, Plus, Edit2, X, Save, Trash2, Trash, XCircle } from "lucide-react";
 import { toast } from "sonner"; 
-import { getAdminProducts, updateAdminProduct, seedDefaultProduct, uploadImage, deleteAdminProduct, deleteImage } from "@/app/admin/actions";
+import { getAdminProducts, updateAdminProduct, seedDefaultProduct, deleteAdminProduct, deleteImage } from "@/app/admin/actions";
+import { storage } from "@/lib/firebase";
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 
 export interface ProductVariant {
   size: string;
@@ -21,6 +23,8 @@ export interface Product {
   description?: string;
   themeColor?: 'terracotta' | 'mustard' | 'emerald' | 'charcoal';
   variants: ProductVariant[];
+  rating?: number;
+  reviewCount?: number;
 }
 
 const DEFAULT_PRODUCT: Product = {
@@ -155,13 +159,14 @@ export function AdminProductsPage() {
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file || !editingProduct) return;
+    if (!file || !editingProduct || !storage) return;
 
     setUploadingImage(true);
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const url = await uploadImage(formData);
+      const filename = `products/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "")}`;
+      const storageRef = ref(storage, filename);
+      await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(storageRef);
       
       const updatedImages = [...(editingProduct.images || []), url];
       setEditingProduct({ 
@@ -183,7 +188,16 @@ export function AdminProductsPage() {
   const handleRemoveImage = async (imageUrl: string, index: number) => {
     if (!editingProduct) return;
 
-    if (imageUrl.startsWith("/uploads/")) {
+    if (imageUrl.includes("firebasestorage.googleapis.com") && storage) {
+      try {
+        const fileRef = ref(storage, imageUrl);
+        await deleteObject(fileRef);
+        toast.success("Image deleted from storage.");
+      } catch (err) {
+        console.error("Error deleting image from storage", err);
+        toast.error("Could not delete image from storage.");
+      }
+    } else if (imageUrl.startsWith("/uploads/")) {
         const res = await deleteImage(imageUrl);
         if (!res.success) {
             toast.error("Could not delete image from server.");

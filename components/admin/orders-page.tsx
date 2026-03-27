@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
-import { Package, Truck, CheckCircle, Clock, Search, Filter } from "lucide-react";
+import { Package, Truck, CheckCircle, Clock, Search, Filter, Trash2 } from "lucide-react";
 import { OrderDetailsModal } from "@/components/admin/order-details-modal";
+import { deleteOrder } from "@/app/admin/actions";
+import { toast } from "sonner";
 
 export function AdminOrdersPage() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -13,6 +15,25 @@ export function AdminOrdersPage() {
   // Modal State
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Delete Modal State
+  const [orderToDelete, setOrderToDelete] = useState<string | null>(null);
+
+  const handleDelete = async () => {
+    if (!orderToDelete) return;
+    try {
+      const res = await deleteOrder(orderToDelete);
+      if (res.success) {
+        toast.success("Order deleted successfully");
+      } else {
+        toast.error("Failed to delete order");
+      }
+    } catch (e) {
+      toast.error("An error occurred");
+    } finally {
+      setOrderToDelete(null);
+    }
+  };
 
   useEffect(() => {
     if (!db) return;
@@ -104,7 +125,7 @@ export function AdminOrdersPage() {
                       })}
                     </div>
                     <div className="text-[11px] text-charcoal-light font-mono bg-charcoal/5 px-1.5 py-0.5 rounded inline-block">
-                      {order.id.substring(0, 10)}...
+                      {order.orderId || order.id.substring(0, 10) + "..."}
                     </div>
                   </td>
                   <td className="p-5 align-middle">
@@ -125,9 +146,18 @@ export function AdminOrdersPage() {
                     </div>
                   </td>
                   <td className="p-5 align-middle text-center">
-                    <button className="text-sm font-medium text-earth hover:text-mustard-dark transition-colors px-3 py-1.5 bg-earth/5 hover:bg-earth/10 rounded-lg opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100">
-                      View
-                    </button>
+                    <div className="flex items-center justify-center gap-2">
+                      <button className="text-sm font-medium text-earth hover:text-mustard-dark transition-colors px-3 py-1.5 bg-earth/5 hover:bg-earth/10 rounded-lg opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100">
+                        View
+                      </button>
+                      <button 
+                        onClick={(e) => { e.stopPropagation(); setOrderToDelete(order.id); }}
+                        className="text-sm font-medium text-chilli hover:text-red-700 transition-colors p-1.5 bg-chilli/5 hover:bg-chilli/10 rounded-lg opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100"
+                        title="Delete Order"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -142,6 +172,33 @@ export function AdminOrdersPage() {
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
       />
+
+      {/* Delete Confirmation Modal */}
+      {orderToDelete && (
+        <div className="fixed inset-0 z-50 bg-charcoal-deep/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-white max-w-sm w-full rounded-3xl shadow-2xl p-8 text-center animate-in zoom-in-95">
+            <div className="w-16 h-16 bg-chilli/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Trash2 className="w-8 h-8 text-chilli" />
+            </div>
+            <h3 className="text-xl font-serif font-bold text-charcoal-deep mb-2">Delete Order?</h3>
+            <p className="text-sm text-charcoal-light mb-8">This action cannot be undone. This order will be permanently removed.</p>
+            <div className="flex gap-4">
+              <button 
+                onClick={(e) => { e.stopPropagation(); setOrderToDelete(null); }}
+                className="flex-1 bg-charcoal/5 hover:bg-charcoal/10 text-charcoal-dark font-semibold py-3 rounded-xl transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={(e) => { e.stopPropagation(); handleDelete(); }}
+                className="flex-1 bg-chilli hover:bg-red-700 text-white font-semibold py-3 rounded-xl transition-colors shadow-lg shadow-chilli/20"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </main>
   );

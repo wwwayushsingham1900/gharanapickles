@@ -57,11 +57,15 @@ export function CategoryClientPage({ products, categoryName }: { products: Produ
                             <div key={product.id} className="md:col-span-8 group">
                                 <div className="bg-surface-container-lowest h-full rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col md:flex-row transition-all duration-500 hover:shadow-xl">
                                     <div className="md:w-1/2 relative overflow-hidden h-64 md:h-auto">
-                                        <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src={displayImage} alt={product.title} />
+                                        <Link href={`/store/product/${product.id}`}>
+                                          <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer" src={displayImage} alt={product.title} />
+                                        </Link>
                                     </div>
                                     <div className="md:w-1/2 p-10 flex flex-col justify-center space-y-6">
                                         <span className="font-label text-[10px] uppercase tracking-widest text-tertiary opacity-60">{categoryName} Item</span>
-                                        <h3 className="font-headline text-4xl text-on-surface">{product.title}</h3>
+                                        <Link href={`/store/product/${product.id}`}>
+                                          <h3 className="font-headline text-4xl text-on-surface hover:text-primary-container transition-colors cursor-pointer">{product.title}</h3>
+                                        </Link>
                                         <p className="text-on-surface-variant leading-relaxed">
                                             {product.description || "A delicate, crunchy masterpiece crafted with traditional spices."}
                                         </p>
@@ -79,12 +83,16 @@ export function CategoryClientPage({ products, categoryName }: { products: Produ
                         <div key={product.id} className="md:col-span-4 group">
                             <div className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-all duration-500 hover:shadow-xl hover:-translate-y-1 h-full flex flex-col">
                                 <div className="relative aspect-[4/5] overflow-hidden">
-                                    <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src={displayImage} alt={product.title} />
+                                    <Link href={`/store/product/${product.id}`}>
+                                      <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 cursor-pointer" src={displayImage} alt={product.title} />
+                                    </Link>
                                 </div>
                                 <div className="p-8 space-y-4 flex-grow flex flex-col justify-between">
                                     <div>
                                         <div className="flex justify-between items-start mb-2">
-                                            <h3 className="font-headline text-2xl text-on-surface">{product.title}</h3>
+                                            <Link href={`/store/product/${product.id}`}>
+                                              <h3 className="font-headline text-2xl text-on-surface hover:text-primary-container transition-colors cursor-pointer">{product.title}</h3>
+                                            </Link>
                                             <span className="text-tertiary font-serif text-xl">{priceDisplay}</span>
                                         </div>
                                         <p className="text-on-surface-variant text-sm line-clamp-3">

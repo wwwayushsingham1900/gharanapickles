@@ -32,12 +32,14 @@ export async function POST(req: Request) {
     const paymentStatus = "mock_success"; 
 
     // 3. Save Order to Firebase 'orders' collection
+    const generatedId = `GP-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
     let orderId = `mock_${Date.now()}`;
     let message = "Order placed (Firebase offline Mode)";
     
     if (db) {
       const ordersRef = collection(db, "orders");
       const orderRef = await addDoc(ordersRef, {
+        orderId: generatedId,
         items,
         shippingDetails,
         totalAmount,
@@ -46,7 +48,7 @@ export async function POST(req: Request) {
         createdAt: new Date().toISOString(),
         adminSecret: "gharanapickles_secure_key_123", // Authenticate to secure Firestore Rules
       });
-      orderId = orderRef.id;
+      orderId = generatedId;
       message = "Order placed successfully";
     }
 

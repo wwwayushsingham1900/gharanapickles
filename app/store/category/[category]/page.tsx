@@ -7,7 +7,7 @@ async function getProductsByCategory(categorySlug: string): Promise<Product[]> {
     const products = await getAdminProducts();
     // Filter matching category
     // Default to empty array if none
-    return products.filter(p => (p.category || 'Our Collection').toLowerCase() === categorySlug.toLowerCase());
+    return products.filter(p => (p.category || 'Our Collection').toLowerCase() === decodeURIComponent(categorySlug).toLowerCase());
   } catch (e) {
     console.error("Failed to fetch products server-side", e);
   }
