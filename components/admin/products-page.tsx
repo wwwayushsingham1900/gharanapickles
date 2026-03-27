@@ -160,25 +160,36 @@ export function AdminProductsPage() {
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file || !editingProduct || !storage) return;
+    if (!file || !editingProduct) return;
 
     setUploadingImage(true);
     try {
-      const filename = `products/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "")}`;
-      const storageRef = ref(storage, filename);
-      await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(storageRef);
-      
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Upload failed");
+      }
+
+      const url = data.secure_url;
       const updatedImages = [...(editingProduct.images || []), url];
+      
       setEditingProduct({ 
         ...editingProduct, 
         images: updatedImages,
         image: updatedImages[0]
       });
-      toast.success("Image uploaded successfully!");
+      toast.success("Image uploaded to Cloudinary!");
     } catch (error) {
       console.error("Upload error", error);
-      toast.error("Failed to upload image.");
+      toast.error("Cloudinary upload failed.");
     } finally {
       setUploadingImage(false);
       // Reset input
