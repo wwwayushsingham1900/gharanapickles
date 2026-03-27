@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     cloudinaryFormData.append("upload_preset", "my_uploads");
 
     const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "YOUR_CLOUD_NAME";
-    const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+    const cloudinaryUrl = `https://api.cloudinary.com/v1_1/dyzvr0hm1/image/upload`;
 
     console.log("Starting Cloudinary upload...");
 
