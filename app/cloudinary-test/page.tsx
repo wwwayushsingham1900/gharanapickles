@@ -91,8 +91,8 @@ export default function CloudinaryUploadTest() {
         alert("Upload successful!");
       }
     } catch (error: any) {
-      console.error("Upload error:", error);
-      alert("Upload error: " + error.message);
+      console.error("Upload error detail:", error);
+      alert("Upload error: " + (error.message || "Something went wrong"));
     } finally {
       setUploading(false);
     }

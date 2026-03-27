@@ -27,8 +27,11 @@ export async function POST(req: Request) {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error("Cloudinary Error:", data);
-      return NextResponse.json({ error: data.error?.message || "Cloudinary upload failed" }, { status: 500 });
+      console.error("Cloudinary Error Detail:", JSON.stringify(data, null, 2));
+      return NextResponse.json({ 
+        error: data.error?.message || "Cloudinary upload failed",
+        detail: data
+      }, { status: 500 });
     }
 
     console.log("Cloudinary upload successful:", data.secure_url);
