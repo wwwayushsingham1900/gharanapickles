@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     // Prepare FormData for Cloudinary
     const cloudinaryFormData = new FormData();
     cloudinaryFormData.append("file", file);
-    cloudinaryFormData.append("upload_preset", "my_uploads");
+    cloudinaryFormData.append("upload_preset", "my_uploads_products");
 
     const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "YOUR_CLOUD_NAME";
     const cloudinaryUrl = `https://api.cloudinary.com/v1_1/dyzvr0hm1/image/upload`;
