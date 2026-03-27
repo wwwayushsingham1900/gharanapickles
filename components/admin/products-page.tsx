@@ -46,6 +46,7 @@ export function AdminProductsPage() {
   const [loading, setLoading] = useState(true);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [imageUrlInput, setImageUrlInput] = useState("");
 
   useEffect(() => {
     fetchProducts();
@@ -183,6 +184,18 @@ export function AdminProductsPage() {
       // Reset input
       e.target.value = '';
     }
+  };
+
+  const handleAddImageUrl = () => {
+    if (!imageUrlInput || !editingProduct) return;
+    const updatedImages = [...(editingProduct.images || []), imageUrlInput];
+    setEditingProduct({ 
+      ...editingProduct, 
+      images: updatedImages,
+      image: updatedImages[0]
+    });
+    setImageUrlInput("");
+    toast.success("Image URL added!");
   };
 
   const handleRemoveImage = async (imageUrl: string, index: number) => {
@@ -365,12 +378,30 @@ export function AdminProductsPage() {
               </div>
               
               <div className="border border-charcoal/10 rounded-xl p-4 bg-white">
-                 <div className="flex items-center justify-between mb-4">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-4">
                      <label className="text-xs font-semibold text-charcoal-light uppercase tracking-wider">Product Images</label>
-                     <label className={`bg-earth/10 text-earth hover:bg-earth/20 font-medium px-4 py-2 rounded-lg transition-colors cursor-pointer flex items-center justify-center text-sm ${uploadingImage ? 'opacity-50 cursor-not-allowed' : ''}`}>
-                         {uploadingImage ? "Uploading..." : "Add Image"}
-                         <input type="file" accept="image/*" className="hidden" onChange={handleFileUpload} disabled={uploadingImage} />
-                     </label>
+                     <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                         <div className="flex text-sm">
+                             <input 
+                               type="url" 
+                               placeholder="Paste Image URL..." 
+                               className="border border-charcoal/10 rounded-l-lg px-3 py-2 outline-none focus:border-mustard w-full sm:w-48"
+                               value={imageUrlInput}
+                               onChange={(e) => setImageUrlInput(e.target.value)}
+                             />
+                             <button 
+                               type="button" 
+                               onClick={handleAddImageUrl}
+                               className="bg-charcoal/5 hover:bg-charcoal/10 font-medium px-3 py-2 rounded-r-lg transition-colors border-y border-r border-charcoal/10"
+                             >
+                               Add
+                             </button>
+                         </div>
+                         <label className={`bg-earth/10 text-earth hover:bg-earth/20 font-medium px-4 py-2 rounded-lg transition-colors cursor-pointer flex items-center justify-center text-sm ${uploadingImage ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                             {uploadingImage ? "Uploading..." : "Upload File"}
+                             <input type="file" accept="image/*" className="hidden" onChange={handleFileUpload} disabled={uploadingImage} />
+                         </label>
+                     </div>
                  </div>
                  
                  {(!editingProduct.images || editingProduct.images.length === 0) ? (

@@ -100,7 +100,7 @@ export function AdminOrdersPage() {
                 <th className="p-5">Customer Info</th>
                 <th className="p-5 text-center">Status</th>
                 <th className="p-5 text-right w-32">Total Paid</th>
-                <th className="p-5 w-20"></th>
+                <th className="p-5 w-24">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-charcoal/10">

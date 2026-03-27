@@ -2,6 +2,8 @@ import { StorePage } from "@/components/store/store-page"
 import { getAdminProducts } from "@/app/admin/actions"
 import { Product } from "@/components/admin/products-page"
 
+export const dynamic = "force-dynamic";
+
 async function getProducts(): Promise<Product[]> {
   try {
     const products = await getAdminProducts();

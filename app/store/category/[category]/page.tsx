@@ -2,6 +2,8 @@ import { getAdminProducts } from "@/app/admin/actions"
 import { Product } from "@/components/admin/products-page"
 import { CategoryClientPage } from "@/components/store/category-client-page"
 
+export const dynamic = "force-dynamic";
+
 async function getProductsByCategory(categorySlug: string): Promise<Product[]> {
   try {
     const products = await getAdminProducts();

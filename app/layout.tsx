@@ -39,6 +39,8 @@ export const viewport: Viewport = {
   themeColor: '#FDFBF7',
 }
 
+import { Toaster } from 'sonner'
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -65,6 +67,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased bg-base text-brown-dark bg-mud-pattern relative overflow-x-hidden">
+        <Toaster position="top-center" richColors />
         <CartProvider>
           <AuthProvider>
             {children}
