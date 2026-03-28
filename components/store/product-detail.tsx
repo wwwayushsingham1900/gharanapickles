@@ -22,6 +22,16 @@ interface Review {
 export function ProductDetail({ product }: { product: Product }) {
   const { addToCart, setIsCartOpen } = useCart();
   const [selectedVariant, setSelectedVariant] = useState(product.variants?.[0] || null);
+
+  const getThemeFrameHex = (color?: string) => {
+    switch (color) {
+      case 'mustard': return '#EAB308';
+      case 'emerald': return '#059669';
+      case 'charcoal': return '#334155';
+      case 'terracotta': 
+      default: return '#C2410C';
+    }
+  };
   
   // Reviews State
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -126,7 +136,7 @@ export function ProductDetail({ product }: { product: Product }) {
         {/* Product Overview */}
         <div className="grid md:grid-cols-2 gap-12 lg:gap-24">
           <div className="space-y-6">
-            <div className="aspect-[4/5] bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm relative">
+            <div style={{ borderTopColor: getThemeFrameHex(product.themeColor) }} className="border-t-[8px] aspect-[4/5] bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm relative">
               <img 
                 src={displayImage || "https://images.unsplash.com/photo-1628189674066-e82df4c753bd"} 
                 alt={product.title} 

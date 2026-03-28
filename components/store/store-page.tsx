@@ -8,6 +8,16 @@ import Link from "next/link"
 export function StorePage({ products }: { products: Product[] }) {
   const { addToCart, setIsCartOpen } = useCart()
 
+  const getThemeFrameHex = (color?: string) => {
+    switch (color) {
+      case 'mustard': return '#EAB308';
+      case 'emerald': return '#059669';
+      case 'charcoal': return '#334155';
+      case 'terracotta': 
+      default: return '#C2410C';
+    }
+  };
+
   const handleAddToCart = (product: Product) => {
     if (!product.variants || product.variants.length === 0) return
     const variant = product.variants[0]
@@ -101,7 +111,7 @@ export function StorePage({ products }: { products: Product[] }) {
                       if (index % 5 === 1) {
                           return (
                               <div key={product.id} className="md:col-span-8 group">
-                                  <div className="bg-surface-container-lowest h-full rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col md:flex-row transition-all duration-500 hover:shadow-xl">
+                                  <div style={{ borderTopColor: getThemeFrameHex(product.themeColor) }} className="border-t-[6px] bg-surface-container-lowest h-full rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col md:flex-row transition-all duration-500 hover:shadow-xl">
                                       <div className="md:w-1/2 relative overflow-hidden h-64 md:h-auto">
                                           <Link href={`/store/product/${product.id}`}>
                                             <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer" src={displayImage} alt={product.title} />
@@ -128,7 +138,7 @@ export function StorePage({ products }: { products: Product[] }) {
 
                       return (
                           <div key={product.id} className="md:col-span-4 group">
-                              <div className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-all duration-500 hover:shadow-xl hover:-translate-y-1 h-full flex flex-col">
+                              <div style={{ borderTopColor: getThemeFrameHex(product.themeColor) }} className="border-t-[6px] bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-all duration-500 hover:shadow-xl hover:-translate-y-1 h-full flex flex-col">
                                   <div className="relative aspect-[4/5] overflow-hidden">
                                       <Link href={`/store/product/${product.id}`}>
                                         <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 cursor-pointer" src={displayImage} alt={product.title} />
